@@ -13,3 +13,8 @@ PASON enables any two machines, ranging from microcontrollers, edge, fog, or clo
 
 Pason was built as a modern framework for use in systems that are physically connected, have sensors, and need to communicate sthe state of that complex system performantly with low overhead and maximal context.
 
+Pason being a modern protocol uses modern transports. Therefore it uses the following dependencies.
+
+Zenoh
+
+IceOryx
