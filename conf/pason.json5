@@ -1,0 +1,44 @@
+{
+  plugins: {
+    // configuration of "storage_manager" plugin:
+    storage_manager: {
+      volumes: {
+        // configuration of a "influxdb" backend (the "zbackend_influxdb" library will be loaded at startup)
+        influxdb: {
+          // URL to the InfluxDB service
+          url: "http://localhost:8086",
+          private: {
+            // InfluxDB credentials, preferably admin for databases creation and drop
+            username: "wwr",
+            password: "wwr"
+          }
+        }
+      },
+      storages: {
+        // configuration of a "sensor-data" storage using the "influxdb" backend
+       pason: {
+          // the key expression this storage will subscribes to
+          key_expr: "/pason/storage/**",
+          // this prefix will be stripped from the received key when converting to database key.
+          // i.e.: "/pason/storage/a/b" will be stored as "a/b"
+          // this option is optional
+          strip_prefix: "/pason/storage",
+          volume: {
+            id: "influxdb",
+            // the database name within InfluxDB
+            db: "pason_store",
+            // if the database doesn't exist, create it
+            create_db: true,
+            // strategy on storage closure
+            on_closure: "drop_db",
+            private: {
+              // InfluxDB credentials, with read/write privileges for the database
+              username: "wwr",
+              password: "wwr"
+            }
+          }
+        }
+      }
+    }
+  }
+}
